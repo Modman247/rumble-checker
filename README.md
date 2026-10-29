@@ -31,11 +31,11 @@ Works with 8BitDo, Xbox, PlayStation controllers
 
 Modes Detected
 
-Mode	                          Driver
-XInput                          (Xbox 360/One)	xpad
-HID / DirectInput (Native)	    hid-generic
-PlayStation (DS4/DualSense)	    hid-playstation
-Steam Input	                    hid-steam
+Mode	                              Driver
+XInput                              (Xbox 360/One)	xpad
+HID / DirectInput (Native)	        hid-generic
+PlayStation (DS4/DualSense)	        hid-playstation
+Steam Input	                        hid-steam
 
 8BitDo Modes
 
