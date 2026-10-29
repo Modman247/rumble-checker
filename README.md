@@ -39,11 +39,11 @@ Steam Input	                        hid-steam
 
 8BitDo Modes
 
-Button Combo	     Mode	      Vendor:Product
-SHARE + UP	       XInput	    2dc8:3106
-SHARE + LEFT	     DInput     (Native) 2dc8:3105
-SHARE + RIGHT	     Mac	      054c:05c4
-SHARE + DOWN	     PSC	      054c:0cda
-SHARE + UP + LEFT	 Genesis	  0079:0011
+Button Combo	       Mode	          Vendor:Product
+SHARE + UP	         XInput	        2dc8:3106
+SHARE + LEFT	       DInput         (Native) 2dc8:3105
+SHARE + RIGHT	       Mac	          054c:05c4
+SHARE + DOWN	       PSC	          054c:0cda
+SHARE + UP + LEFT	   Genesis	      0079:0011
 
 Made by Modman247
