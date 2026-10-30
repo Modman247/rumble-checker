@@ -16,12 +16,11 @@ reads battery level, and fixes udev permission issues — all in one GUI.
 
 Download `rumble-checker` and `install.sh` from the [latest release](https://github.com/Modman247/rumble-checker/releases), put them in the same folder, navigate to the folder through cli and make install.sh executable by chmod +x install.sh then run ./install.sh
 
-```bash
 chmod +x install.sh
 ./install.sh
 
 ### Arch Linux (AUR)
-```bash
+
 yay -S rumble-checker
 
 Manual
