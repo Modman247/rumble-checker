@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-BIN="$(pwd)/rumble-checker"
+BIN="$(pwd)/dist/rumble-checker"
 ICON_NAME="rumble-checker"
 
 # --- Install binary ---
