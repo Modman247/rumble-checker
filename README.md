@@ -39,20 +39,22 @@ Note: Battery level is read via the kernel's HID Battery Status service. It will
 
 Modes Detected
 
-Mode	                           Driver
-XInput                             (Xbox 360/One) xpad
-HID / DirectInput (Native)	   hid-generic
-PlayStation (DS4/DualSense)	   hid-playstation
-Steam Input	                   hid-steam
+| Mode | Driver |
+|------|--------|
+| XInput (Xbox 360/One) | `xpad` |
+| HID / DirectInput (Native) | `hid-generic` |
+| PlayStation (DS4/DualSense) | `hid-playstation` |
+| Steam Input | `hid-steam` |   
 
 8BitDo Modes
 
-Button Combo	         Mode	              Vendor:Product
-SHARE + UP	         XInput	              2dc8:3106
-SHARE + LEFT	         DInput (Native)      2dc8:3105
-SHARE + RIGHT	         Mac	              054c:05c4
-SHARE + DOWN	         PSC	              054c:0cda
-SHARE + UP + LEFT	 Genesis	      0079:0011
+| Button Combo | Mode | Vendor:Product |
+|---|---|---|
+| SHARE + UP | XInput | `2dc8:3106` |
+| SHARE + LEFT | DInput (Native) | `2dc8:3105` |
+| SHARE + RIGHT | Mac | `054c:05c4` |
+| SHARE + DOWN | PSC | `054c:0cda` |
+| SHARE + UP + LEFT | Genesis | `0079:0011` |
 
 Made by Modman247
 
