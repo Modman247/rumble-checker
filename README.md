@@ -19,14 +19,17 @@ chmod +x install.sh
 ./install.sh
 
 Arch Linux (AUR)
+
 yay -S rumble-checker
 
 Manual
+
 sudo pacman -S python-evdev
 wget https://github.com/Modman247/rumble-checker/releases/download/v1.0.0/rumble-checker
 chmod +x rumble-checker && ./rumble-checker
 
 Features
+
 Detects all connected gamepads
 Shows vendor:product ID, controller mode, battery level
 Tests rumble with adjustable duration
