@@ -21,6 +21,7 @@ mkdir -p "$DESKTOP_DIR"
 base64 -d > "$DESKTOP_DIR/$ICON_NAME.desktop" <<'EOF'
 W0Rlc2t0b3AgRW50cnldCk5hbWU9UnVtYmxlIENoZWNrZXIKQ29tbWVudD1Db250cm9sbGVyIGRpYWdub3N0aWMgYW5kIHJ1bWJsZSB0ZXN0CkV4ZWM9L3Vzci9sb2NhbC9iaW4vcnVtYmxlLWNoZWNrZXIKSWNvbj1ydW1ibGUtY2hlY2tlcgpUZXJtaW5hbD1mYWxzZQpUeXBlPUFwcGxpY2F0aW9uCkNhdGVnb3JpZXM9VXRpbGl0eTtTeXN0ZW07Cg==
 EOF
+sed -i 's/Categories=Utility;System;/Categories=Utility;/' "$DESKTOP_DIR/$ICON_NAME.desktop"
 update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
 
 echo "Done. Look for 'Rumble Checker' in your app menu."
