@@ -13,7 +13,7 @@ Linux controller diagnostic tool. Detects gamepads, shows vendor:product ID, tes
 ### Quick (Recommended)
 
 git clone https://github.com/Modman247/rumble-checker && cd rumble-checker && ./install.sh
-OR
+
 Download `rumble-checker` and `install.sh` from the [latest release](https://github.com/Modman247/rumble-checker/releases), put them in the same folder, then run:
 
 ```bash
