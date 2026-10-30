@@ -3,7 +3,7 @@ set -e
 
 ICON_NAME="rumble-checker"
 
-rm -f /usr/local/bin/$ICON_NAME
+sudo rm -f /usr/local/bin/$ICON_NAME
 rm -f "$HOME/.local/share/icons/hicolor/256x256/apps/$ICON_NAME.png"
 rm -f "$HOME/.local/share/applications/$ICON_NAME.desktop"
 
