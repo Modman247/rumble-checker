@@ -2,3 +2,10 @@ build/
 dist/
 __pycache__/
 *.pyc
+
+# makepkg build artifacts
+pkg/
+src/
+*.pkg.tar.zst
+rumble-checker
+
