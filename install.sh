@@ -24,7 +24,6 @@ cat > "$DESKTOP_FILE" <<EOF
 [Desktop Entry]
 Type=Application
 Name=Rumble Checker
-Comment=Test and calibrate rumble/force feedback devices
 Exec=$BIN_PATH
 Icon=$ICON_NAME
 Terminal=false
