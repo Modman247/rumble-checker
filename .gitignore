@@ -1,11 +1,12 @@
 build/
+build-dir/
+.flatpak-builder/
 dist/
-__pycache__/
-*.pyc
-
-# makepkg build artifacts
 pkg/
+repo/
 src/
+build.log
+*.tar.gz
 *.pkg.tar.zst
 rumble-checker
-
+[51

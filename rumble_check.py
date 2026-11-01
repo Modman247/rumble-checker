@@ -13,6 +13,9 @@ import struct
 import threading
 import tempfile
 
+def is_flatpak():
+    return os.path.exists("/run/host/user") or "container" in os.environ.get("container", "")
+
 # ─── SEGA GENESIS PALETTE ────────────────────────────────────────
 BG        = "#000000"
 PANEL     = "#141414"
@@ -269,6 +272,13 @@ def is_readable(event_node):
 
 
 def fix_permissions(event_node, name, vendor, product):
+    if is_flatpak():
+        return True, (
+            "Running in Flatpak — device access is handled by the sandbox.\n"
+            "No udev rules or group changes needed.\n\n"
+            "If a device shows DENIED, it likely is not connected\n"
+            "or the driver does not expose it as an input device."
+        )
     messages = []
     if not is_in_input_group():
         try:
