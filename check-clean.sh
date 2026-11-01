@@ -1,32 +1,76 @@
 #!/usr/bin/env bash
+
+APP="rumble-checker"
+FOUND=0
+
+check() {
+    if [ -e "$1" ]; then
+        echo "  FOUND: $1"
+        FOUND=1
+    else
+        echo "  clean"
+    fi
+}
+
+check_cmd() {
+    if command -v "$1" >/dev/null 2>&1; then
+        echo "  FOUND: $(command -v "$1")"
+        FOUND=1
+    else
+        echo "  clean"
+    fi
+}
+
 echo "=== Binary ==="
-which rumble-checker 2>/dev/null || echo "clean"
-ls /usr/local/bin/rumble-checker 2>/dev/null || echo "clean"
-ls /usr/bin/rumble-checker 2>/dev/null || echo "clean"
+check_cmd "$APP"
+check "/usr/local/bin/$APP"
+check "/usr/bin/$APP"
+check "$HOME/.local/bin/$APP"
 
 echo "=== User .desktop ==="
-ls ~/.local/share/applications/rumble-checker.desktop 2>/dev/null || echo "clean"
+check "$HOME/.local/share/applications/$APP.desktop"
 
 echo "=== System .desktop ==="
-ls /usr/share/applications/rumble-checker.desktop 2>/dev/null || echo "clean"
-ls /usr/local/share/applications/rumble-checker.desktop 2>/dev/null || echo "clean"
+check "/usr/share/applications/$APP.desktop"
+check "/usr/local/share/applications/$APP.desktop"
 
 echo "=== Icon (user) ==="
-ls ~/.local/share/icons/hicolor/256x256/apps/rumble-checker.png 2>/dev/null || echo "clean"
+check "$HOME/.local/share/icons/hicolor/256x256/apps/$APP.png"
 
 echo "=== Icon (system) ==="
-ls /usr/share/icons/hicolor/256x256/apps/rumble-checker.png 2>/dev/null || echo "clean"
+check "/usr/share/icons/hicolor/256x256/apps/$APP.png"
+check "/usr/local/share/icons/hicolor/256x256/apps/$APP.png"
 
 echo "=== Desktop shortcut ==="
-rm -f "$HOME/Desktop/rumble-checker.desktop"
-ls ~/Desktop/rumble-checker.desktop 2>/dev/null || echo "clean"
+check "$HOME/Desktop/$APP.desktop"
+
+echo "=== Config / state ==="
+check "$HOME/.config/$APP"
+check "$HOME/.cache/$APP"
+check "$HOME/.local/state/$APP"
 
 echo "=== Package (RPM) ==="
-rpm -q rumble-checker 2>/dev/null || echo "clean"
+rpm -q "$APP" 2>/dev/null || echo "  clean"
 
 echo "=== Package (pacman) ==="
-pacman -Q rumble-checker 2>/dev/null || echo "clean"
+pacman -Q "$APP" 2>/dev/null || echo "  clean"
 
-echo "=== Debug leftovers ==="
-ls /usr/src/debug/rumble-checker 2>/dev/null || echo "clean"
-chmod +x check-clean.sh
+echo "=== Package (dpkg) ==="
+dpkg -s "$APP" 2>/dev/null || echo "  clean"
+
+echo "=== Package (flatpak) ==="
+flatpak list --app 2>/dev/null | grep -i "$APP" || echo "  clean"
+
+echo "=== Package (snap) ==="
+snap list 2>/dev/null | grep -i "$APP" || echo "  clean"
+
+echo "=== Debug / build leftovers ==="
+check "/usr/src/debug/$APP"
+check "/usr/src/$APP"
+
+echo ""
+if [ "$FOUND" -eq 1 ]; then
+    echo "⚠ Leftovers found — see above."
+else
+    echo "✓ All clean."
+fi
