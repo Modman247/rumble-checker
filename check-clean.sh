@@ -59,7 +59,7 @@ echo "=== Package (dpkg) ==="
 dpkg -s "$APP" 2>/dev/null || echo "  clean"
 
 echo "=== Package (flatpak) ==="
-flatpak list --app 2>/dev/null | grep -i "$APP" || echo "  clean"
+flatpak list --app --columns=application 2>/dev/null | grep -i "rumblechecker" || echo "  clean"
 
 echo "=== Package (snap) ==="
 snap list 2>/dev/null | grep -i "$APP" || echo "  clean"
