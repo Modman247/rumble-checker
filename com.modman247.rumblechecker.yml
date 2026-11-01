@@ -6,7 +6,8 @@ command: rumble-checker
 finish-args:
   - --env=PYTHONPATH=/app/lib/python3.13/site-packages
   - --share=ipc
-  - --socket=x11
+  - --socket=wayland
+  - --socket=fallback-x11
   - --socket=pulseaudio
   - --device=input
   - --device=dri
@@ -75,8 +76,12 @@ modules:
     buildsystem: simple
     build-commands:
       - install -Dm755 rumble_check.py /app/bin/rumble-checker
-      - install -Dm644 rumble-checker.desktop /app/share/applications/com.modman247.rumblechecker.desktop
+      - install -Dm644 com.modman247.rumblechecker.desktop /app/share/applications/com.modman247.rumblechecker.desktop
       - install -Dm644 rumble-checker.png /app/share/icons/hicolor/256x256/apps/com.modman247.rumblechecker.png
     sources:
-      - type: dir
-        path: .
+      - type: file
+        path: rumble_check.py
+      - type: file
+        path: flatpak/rumble-checker.png
+      - type: file
+        path: flatpak/com.modman247.rumblechecker.desktop
