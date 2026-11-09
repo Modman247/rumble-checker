@@ -1,35 +1,63 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BIN="$SCRIPT_DIR/dist/rumble-checker"
-ICON_NAME="rumble-checker"
-BIN_PATH="/usr/local/bin/$ICON_NAME"
+APP="rumble-checker"
+SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
+DEST_DIR="$HOME/.local/lib/$APP"
+BIN_DIR="$HOME/.local/bin"
 ICON_DIR="$HOME/.local/share/icons/hicolor/256x256/apps"
 DESKTOP_DIR="$HOME/.local/share/applications"
-DESKTOP_FILE="$DESKTOP_DIR/$ICON_NAME.desktop"
 
-[[ -f "$BIN" ]] || { echo "Error: $BIN not found. Build first." >&2; exit 1; }
+echo "=== Installing $APP v2 ==="
 
-# --- Binary ---
-sudo install -m 755 "$BIN" "$BIN_PATH"
+# Python files
+mkdir -p "$DEST_DIR"
+cp "$SRC_DIR"/{backend.py,tk_app.py,cli.py,sfx.py,controllers.json} "$DEST_DIR/"
+echo "  installed Python files to $DEST_DIR"
 
-# --- Icon ---
+# Launcher scripts
+mkdir -p "$BIN_DIR"
+cat > "$BIN_DIR/$APP" << LAUNCHER
+#!/bin/sh
+exec python3 $DEST_DIR/tk_app.py "\$@"
+LAUNCHER
+chmod +x "$BIN_DIR/$APP"
+
+cat > "$BIN_DIR/$APP-cli" << CLIBIN
+#!/bin/sh
+exec python3 $DEST_DIR/cli.py "\$@"
+CLIBIN
+chmod +x "$BIN_DIR/$APP-cli"
+echo "  installed $BIN_DIR/$APP and $BIN_DIR/$APP-cli"
+
+# Icon
 mkdir -p "$ICON_DIR"
-cp "$SCRIPT_DIR/rumble-checker.png" "$ICON_DIR/$ICON_NAME.png"
+cp "$SRC_DIR/rumble-checker.png" "$ICON_DIR/$APP.png"
+echo "  installed icon"
 
-# --- Desktop entry ---
-mkdir -p "$DESKTOP_DIR"
-cat > "$DESKTOP_FILE" <<EOF
-[Desktop Entry]
-Type=Application
-Name=Rumble Checker
-Exec=$BIN_PATH
-Icon=$ICON_NAME
-Terminal=false
-Categories=Utility;Accessibility;
-EOF
+# .desktop
+sed "s|^Exec=.*|Exec=$APP|" "$SRC_DIR/rumble-checker.desktop" \
+  | sed "s|^Icon=.*|Icon=$APP|" \
+  > "$DESKTOP_DIR/$APP.desktop"
+echo "  installed .desktop"
 
-# --- Refresh caches ---
-gtk-update-icon-cache "$HOME/.local/share/icons/hicolor" 2>/dev/null || true
+# Udev rule (optional — Fix Access also does this)
+if [ ! -f /etc/udev/rules.d/99-rumble-checker.rules ]; then
+    echo ""
+    read -p "  Set up udev rule for all controllers? (y/N) " ans
+    if [ "$ans" = "y" ]; then
+        sudo bash -c 'echo "SUBSYSTEM==\"input\", ENV{ID_INPUT_JOYSTICK}==\"1\", MODE=\"0666\"" > /etc/udev/rules.d/99-rumble-checker.rules'
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --subsystem-match=input
+        echo "  installed udev rule (relogin to apply)"
+    fi
+fi
+
+# KDE cache refresh
+rm -f "$HOME/.cache/icon-cache.kcache"
+kbuildsycoca6 --noincremental 2>/dev/null || true
 update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
+
+echo ""
+echo "Done. Run: $APP"
+echo "Or find it in your app launcher."
