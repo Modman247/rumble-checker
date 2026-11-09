@@ -1,51 +1,53 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP="rumble-checker"
-SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
-DEST_DIR="$HOME/.local/lib/$APP"
-BIN_DIR="$HOME/.local/bin"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_NAME="rumble-checker"
+LIB_DIR="/usr/local/lib/$APP_NAME"
+BIN_PATH="/usr/local/bin/$APP_NAME"
 ICON_DIR="$HOME/.local/share/icons/hicolor/256x256/apps"
 DESKTOP_DIR="$HOME/.local/share/applications"
+DESKTOP_FILE="$DESKTOP_DIR/$APP_NAME.desktop"
 
-echo "=== Installing $APP v2 ==="
+# --- Python files ---
+sudo mkdir -p "$LIB_DIR"
+sudo cp "$SCRIPT_DIR"/{backend.py,tk_app.py,cli.py,sfx.py,controllers.json} "$LIB_DIR/"
+echo "  installed Python files to $LIB_DIR"
 
-# Python files
-mkdir -p "$DEST_DIR"
-cp "$SRC_DIR"/{backend.py,tk_app.py,cli.py,sfx.py,controllers.json} "$DEST_DIR/"
-echo "  installed Python files to $DEST_DIR"
-
-# Launcher scripts
-mkdir -p "$BIN_DIR"
-cat > "$BIN_DIR/$APP" << LAUNCHER
+# --- Launcher ---
+sudo bash -c "cat > $BIN_PATH << 'LAUNCHER'
 #!/bin/sh
-exec python3 $DEST_DIR/tk_app.py "\$@"
+exec python3 /usr/local/lib/rumble-checker/tk_app.py \"\$@\"
 LAUNCHER
-chmod +x "$BIN_DIR/$APP"
+chmod 755 $BIN_PATH"
+echo "  installed $BIN_PATH"
 
-cat > "$BIN_DIR/$APP-cli" << CLIBIN
+# --- CLI launcher ---
+sudo bash -c "cat > /usr/local/bin/$APP_NAME-cli << 'CLIBIN'
 #!/bin/sh
-exec python3 $DEST_DIR/cli.py "\$@"
+exec python3 /usr/local/lib/rumble-checker/cli.py \"\$@\"
 CLIBIN
-chmod +x "$BIN_DIR/$APP-cli"
-echo "  installed $BIN_DIR/$APP and $BIN_DIR/$APP-cli"
+chmod 755 /usr/local/bin/$APP_NAME-cli"
+echo "  installed /usr/local/bin/$APP_NAME-cli"
 
-# Icon
+# --- Icon ---
 mkdir -p "$ICON_DIR"
-cp "$SRC_DIR/rumble-checker.png" "$ICON_DIR/$APP.png"
-echo "  installed icon"
+cp "$SCRIPT_DIR/rumble-checker.png" "$ICON_DIR/$APP_NAME.png"
 
-# .desktop
-sed "s|^Exec=.*|Exec=$APP|" "$SRC_DIR/rumble-checker.desktop" \
-  | sed "s|^Icon=.*|Icon=$APP|" \
-  > "$DESKTOP_DIR/$APP.desktop"
-echo "  installed .desktop"
+# --- Desktop entry ---
+mkdir -p "$DESKTOP_DIR"
+cat > "$DESKTOP_FILE" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Rumble Checker
+Exec=$BIN_PATH
+Icon=$APP_NAME
+Terminal=false
+Categories=Utility;
+EOF
 
-# KDE cache refresh
-rm -f "$HOME/.cache/icon-cache.kcache"
-kbuildsycoca6 --noincremental 2>/dev/null || true
+# --- Refresh caches ---
+gtk-update-icon-cache "$HOME/.local/share/icons/hicolor" 2>/dev/null || true
 update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
 
-echo ""
-echo "Done. Run: $APP"
-echo "Or find it in your app launcher."
+echo "Done. Run: $APP_NAME"
