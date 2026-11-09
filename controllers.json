@@ -1,0 +1,279 @@
+{
+  "2dc8:3106": {
+    "name": "8BitDo Ultimate",
+    "mode": "XInput (xpad)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "Dongle/USB/BT",
+    "quirks": [
+      "No battery via any path (firmware limitation)",
+      "Dongle changes VID:PID per mode",
+      "Switch: Hold SHARE + UP(X)/LEFT(D)/RIGHT(Mac)/DOWN(PSC)/UP+LEFT(Genesis)",
+      "FW: web.8bitdo.com (USB only)"
+    ]
+  },
+  "2dc8:3107": {
+    "name": "8BitDo 2.4G Receiver",
+    "mode": "Dongle",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "USB",
+    "quirks": [
+      "FW: Hold small button while plugging in (bootloader)",
+      "Does not forward firmware queries"
+    ]
+  },
+  "045e:02e0": {
+    "name": "8BitDo N30 Arcade Stick (X mode)",
+    "mode": "XInput (xpad)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "BT/2.4G",
+    "quirks": [
+      "Spoofs as Xbox Series S",
+      "USB port = charge/FW only, NOT input",
+      "No rumble (arcade stick)",
+      "Physical toggle on top (X/D)"
+    ]
+  },
+  "2dc8:1080": {
+    "name": "8BitDo N30 Arcade Stick (D mode)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "BT/2.4G",
+    "quirks": [
+      "USB port = charge/FW only, NOT input"
+    ]
+  },
+  "045e:028e": {
+    "name": "Xbox 360 Wired / 8BitDo X-mode (shared)",
+    "mode": "XInput (xpad)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "USB/Dongle/BT",
+    "quirks": [
+      "SHARED by 7 controllers: Xbox 360 Wired, 8BitDo M30/SN30/PCE30 (X), N-SL SW001, Honwally NES",
+      "Distinguish by physical unit, name in D mode, or connection method",
+      "Xbox 360 Wired: auto-claims via xpad, cannot test inject"
+    ]
+  },
+  "0ca3:0024": {
+    "name": "8BitDo M30 #1 (D mode, OLD firmware)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "BT/Dongle",
+    "quirks": [
+      "Name reported: '6B controller'",
+      "Old firmware. New M30 units report as 2dc8:5006"
+    ]
+  },
+  "2dc8:5006": {
+    "name": "8BitDo M30 #2 (D mode, NEW firmware)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "BT/Dongle",
+    "quirks": [
+      "Name reported: '8Bitdo 8BitDo M30 gamepad'"
+    ]
+  },
+  "2dc8:9012": {
+    "name": "8BitDo SN30 (D mode)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "Dongle/BT",
+    "quirks": [
+      "Name reported: '8Bitdo 8BitDo SN30 gamepad'"
+    ]
+  },
+  "054c:05c4": {
+    "name": "8BitDo SN30 (macOS mode)",
+    "mode": "macOS (hid-playstation)",
+    "ff": true,
+    "battery": "100%",
+    "conn": "Dongle",
+    "quirks": [
+      "Spoofs as DS4 Original",
+      "Reports battery (unlike other 8BitDo modes)",
+      "First attempt might show Switch mode \u2014 needs retry"
+    ]
+  },
+  "057e:2009": {
+    "name": "8BitDo SN30 (Switch mode)",
+    "mode": "Switch Pro (hid-nintendo)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "quirks": [
+      "Spoofs as Switch Pro Controller"
+    ]
+  },
+  "0f0d:0138": {
+    "name": "8BitDo PCE30/TG16 2.4G (D mode)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "quirks": [
+      "Name reported: 'PCEngine PAD PCEngine PAD'",
+      "2.4G only. No BT. No USB data",
+      "180mAh, ~18h. Auto-off 1min",
+      "Switch mode does NOT work on PC via dongle"
+    ]
+  },
+  "2dc8:ab12": {
+    "name": "8BitDo N30/F30 #2 (D mode, Dongle)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "quirks": [
+      "Name reported: 'NES30 Joystick'"
+    ]
+  },
+  "1235:ab12": {
+    "name": "8BitDo N30/F30 #1 (D mode, Dongle, OLD firmware)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "quirks": [
+      "Name reported: 'NES30 Joystick'",
+      "Old firmware. Vendor ID is 1235 instead of 2dc8"
+    ]
+  },
+  "2820:0009": {
+    "name": "8BitDo N30/F30 #1 (D mode, BT, OLD firmware)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "BT",
+    "quirks": [
+      "Name reported: '8Bitdo NES30 GamePad'",
+      "Different VID depending on connection method"
+    ]
+  },
+  "054c:09cc": {
+    "name": "Sony DS4 (Slim)",
+    "mode": "PlayStation Native (hid-playstation)",
+    "ff": true,
+    "battery": "Yes",
+    "conn": "BT (uhid) / USB (hid-playstation)",
+    "quirks": [
+      "Same VID:PID both connections",
+      "Needs data cable for USB",
+      "BT off to force USB mode",
+      "Lightbar: USB only (BT = firmware-managed)",
+      "FW: USB only"
+    ]
+  },
+  "054c:0268": {
+    "name": "Sony DS3 (DualShock 3)",
+    "mode": "PlayStation Native (hid-sony)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "USB/BT",
+    "quirks": [
+      "Two input nodes: gamepad + motion sensors (separate event)",
+      "No mode switching (always DInput on Linux)",
+      "Battery not exposed via USB",
+      "BT requires sony driver (not standard hid-playstation)",
+      "LED strip not host-controllable"
+    ]
+  },
+  "054c:0cda": {
+    "name": "PS Classic",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "USB",
+    "quirks": [
+      "No mode switching. No rumble."
+    ]
+  },
+  "045e:028f": {
+    "name": "Xbox 360 Wireless (Plug & Charge)",
+    "mode": "N/A (charge only)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "USB (charge only) / 2.4GHz RF",
+    "quirks": [
+      "USB = CHARGE ONLY, no input data",
+      "Input via 2.4GHz RF only (needs Xbox receiver)",
+      "NOT usable as USB input on Linux",
+      "xHCI protocol error -71 on some mini PCs"
+    ]
+  },
+  "0955:7214": {
+    "name": "NVIDIA Shield Portable (P2920)",
+    "mode": "Native (hid_nvidia_shield)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "USB",
+    "quirks": [
+      "Two input nodes (haptics + controls)",
+      "Dedicated shield kernel module",
+      "Also an Android tablet",
+      "BT pairing not possible"
+    ]
+  },
+  "046d:c21f": {
+    "name": "Logitech F710",
+    "mode": "XInput (xpad)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "USB/BT/Dongle",
+    "quirks": [
+      "XInput: Hold + button while plugging in USB",
+      "DInput: Plug in without holding any button",
+      "Physical toggle on back also works"
+    ]
+  },
+  "0e6f:1113": {
+    "name": "No-name N64 2.4G (SAFFUN + others)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "quirks": [
+      "Name reported: 'SWITCH CO.,LTD. Usb Controller' (misleading)",
+      "3+ units in collection, all identical VID:PID",
+      "SAFFUN brand confirmed on one unit"
+    ]
+  },
+  "0079:0011": {
+    "name": "No-name N64 2.4G (dragonrise)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "quirks": []
+  },
+  "0000:0000": {
+    "name": "PowerA GameCube (1507453)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "BT",
+    "quirks": [
+      "Name reported: 'Lic Pro Controller' (misleading)",
+      "Reports 0000:0000 as VID:PID over BT",
+      "Cannot be identified by VID:PID \u2014 only by name string"
+    ]
+  },
+  "20bc:5501": {
+    "name": "SNK NeoGeo Arcade Stick Pro (JJ)",
+    "mode": "DInput (hid-generic)",
+    "ff": false,
+    "battery": "N/A",
+    "conn": "USB",
+    "quirks": [
+      "Vendor: ShenZhen ShanWan Technology",
+      "xpad inject candidate: echo 20bc 5501 | sudo tee /sys/module/xpad/parameters/new_id",
+      "Should switch from DInput to XInput after inject"
+    ]
+  }
+}

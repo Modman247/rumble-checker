@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rumble-checker"
+version = "2.0.0"
+description = "Linux controller diagnostic: rumble test, drift check, battery, firmware"
+requires-python = ">=3.10"
+dependencies = [
+    "evdev>=1.6",
+]
+
+[project.optional-dependencies]
+gui = ["PyGObject>=3.48"]
+
+[project.scripts]
+rumble-checker = "cli:main"
+rumble-checker-cli = "cli:main"
