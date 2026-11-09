@@ -17,7 +17,7 @@ echo "  installed Python files to $LIB_DIR"
 # --- Launcher ---
 sudo bash -c "cat > $BIN_PATH << 'LAUNCHER'
 #!/bin/sh
-exec python3 /usr/local/lib/rumble-checker/tk_app.py \"\$@\"
+cd /usr/local/lib/rumble-checker && exec python3 tk_app.py \"\$@\"
 LAUNCHER
 chmod 755 $BIN_PATH"
 echo "  installed $BIN_PATH"
@@ -25,7 +25,7 @@ echo "  installed $BIN_PATH"
 # --- CLI launcher ---
 sudo bash -c "cat > /usr/local/bin/$APP_NAME-cli << 'CLIBIN'
 #!/bin/sh
-exec python3 /usr/local/lib/rumble-checker/cli.py \"\$@\"
+cd /usr/local/lib/rumble-checker && exec python3 cli.py \"\$@\"
 CLIBIN
 chmod 755 /usr/local/bin/$APP_NAME-cli"
 echo "  installed /usr/local/bin/$APP_NAME-cli"
