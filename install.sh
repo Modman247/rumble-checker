@@ -41,18 +41,6 @@ sed "s|^Exec=.*|Exec=$APP|" "$SRC_DIR/rumble-checker.desktop" \
   > "$DESKTOP_DIR/$APP.desktop"
 echo "  installed .desktop"
 
-# Udev rule (optional — Fix Access also does this)
-if [ ! -f /etc/udev/rules.d/99-rumble-checker.rules ]; then
-    echo ""
-    read -p "  Set up udev rule for all controllers? (y/N) " ans
-    if [ "$ans" = "y" ]; then
-        sudo bash -c 'echo "SUBSYSTEM==\"input\", ENV{ID_INPUT_JOYSTICK}==\"1\", MODE=\"0666\"" > /etc/udev/rules.d/99-rumble-checker.rules'
-        sudo udevadm control --reload-rules
-        sudo udevadm trigger --subsystem-match=input
-        echo "  installed udev rule (relogin to apply)"
-    fi
-fi
-
 # KDE cache refresh
 rm -f "$HOME/.cache/icon-cache.kcache"
 kbuildsycoca6 --noincremental 2>/dev/null || true
