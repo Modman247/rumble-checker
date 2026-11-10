@@ -18,21 +18,16 @@ package() {
     install -Dm644 cli.py "$pkgdir/usr/lib/rumble-checker/cli.py"
     install -Dm644 sfx.py "$pkgdir/usr/lib/rumble-checker/sfx.py"
     install -Dm644 controllers.json "$pkgdir/usr/lib/rumble-checker/controllers.json"
+    install -Dm644 rumble-checker-icon.png "$pkgdir/usr/lib/rumble-checker/rumble-checker-icon.png"
 
-    cat > "$pkgdir/usr/bin/rumble-checker" << 'LAUNCHER'
-#!/bin/sh
-exec python3 /usr/lib/rumble-checker/tk_app.py "$@"
-LAUNCHER
-    chmod 755 "$pkgdir/usr/bin/rumble-checker"
+    install -Dm755 /dev/null "$pkgdir/usr/bin/rumble-checker"
+    printf '#!/bin/sh\ncd /usr/lib/rumble-checker\nexec python3 tk_app.py "$@"\n' > "$pkgdir/usr/bin/rumble-checker"
 
-    cat > "$pkgdir/usr/bin/rumble-checker-cli" << 'CLIBIN'
-#!/bin/sh
-exec python3 /usr/lib/rumble-checker/cli.py "$@"
-CLIBIN
-    chmod 755 "$pkgdir/usr/bin/rumble-checker-cli"
+    install -Dm755 /dev/null "$pkgdir/usr/bin/rumble-checker-cli"
+    printf '#!/bin/sh\ncd /usr/lib/rumble-checker\nexec python3 cli.py "$@"\n' > "$pkgdir/usr/bin/rumble-checker-cli"
 
     install -Dm644 rumble-checker.desktop "$pkgdir/usr/share/applications/rumble-checker.desktop"
-    sed -i 's|^Exec=.*|Exec=rumble-checker|' "$pkgdir/usr/share/applications/rumble-checker.desktop"
+    sed -i 's|^Exec=.*|Exec=/usr/bin/rumble-checker|' "$pkgdir/usr/share/applications/rumble-checker.desktop"
     sed -i 's|^Icon=.*|Icon=rumble-checker|' "$pkgdir/usr/share/applications/rumble-checker.desktop"
 
     install -Dm644 rumble-checker.png "$pkgdir/usr/share/icons/hicolor/256x256/apps/rumble-checker.png"
