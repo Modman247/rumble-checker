@@ -6,7 +6,7 @@ arch=(any)
 url="https://github.com/Modman247/rumble-checker"
 license=(MIT)
 depends=(python python-evdev)
-optdepends=(python-dbus:"battery reading on some devices")
+optdepends=("python-dbus: battery reading on some devices")
 source=("$pkgname-$pkgver.tar.gz::https://github.com/Modman247/rumble-checker/archive/refs/tags/v2.0.tar.gz")
 sha256sums=('SKIP')
 
