@@ -2,6 +2,8 @@
 
 No existing Linux tool combines rumble, polling, drift, and permission management in one place. This does.
 
+> **v1** was a single-file rumble tester. **v2** is a full diagnostic suite. See [v1.0](https://github.com/Modman247/rumble-checker/tree/v1.0) for the original.
+
 [![Python](https://img.shields.io/badge/Python-3.10+-blue)]()
 [![Platform](https://img.shields.io/badge/Platform-Linux-green)]()
 [![License](https://img.shields.io/badge/License-MIT-yellow)]()
@@ -24,25 +26,37 @@ No existing Linux tool combines rumble, polling, drift, and permission managemen
 
 ## Install
 
+### Dependencies
+
 ```bash
-# Dependencies
 sudo pacman -S python-evdev          # Arch
 sudo apt install python3-evdev       # Debian/Ubuntu
 
-# Clone & run
+Option 1: install.sh
+git clone https://github.com/Modman247/rumble-checker.git
+cd rumble-checker
+./install.sh
+
+Option 2: makepkg (Arch)
+git clone https://github.com/Modman247/rumble-checker.git
+cd rumble-checker
+makepkg -si
+
+Option 3: Run directly (no install)
 git clone https://github.com/Modman247/rumble-checker.git
 cd rumble-checker
 python3 tk_app.py
-No build step. No root needed after first Fix Access.
+
+No build step required. No root needed after first Fix Access.
 
 Usage
 Connect a controller (USB, dongle, or Bluetooth)
-Run python3 tk_app.py
+Run rumble-checker (or python3 tk_app.py)
 Select a controller
 Use the action buttons (Drift, FW, Export, Fix/Remove Access, Re-check)
 Rumble panel: set intensity / duration / pattern → hit L / BOTH / R
 CLI
-python3 cli.py report    # JSON to stdout
+rumble-checker-cli report    # JSON to stdout
 
 Architecture
 File	Purpose
