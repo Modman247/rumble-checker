@@ -56,7 +56,8 @@ Select a controller
 Use the action buttons (Drift, FW, Export, Fix/Remove Access, Re-check)
 Rumble panel: set intensity / duration / pattern → hit L / BOTH / R
 CLI
-rumble-checker-cli report    # JSON to stdout
+rumble-checker-cli report # Full JSON diagnostic to stdout
+Available after install (install.sh or makepkg). If running directly without install, use python3 cli.py report instead.
 
 Architecture
 File	Purpose
@@ -75,6 +76,22 @@ DS4 firmware / LED: USB only (BT is firmware-managed)
 8BitDo: no battery via any path (firmware limitation)
 xpad inject: blocked on kernel 7.2+ (new_id removed)
 TrigFF: requires Xbox Series X/S (not yet tested)
+
+## Uninstall
+
+### If installed via install.sh
+
+```bash
+./uninstall.sh
+
+If installed via makepkg
+sudo pacman -Rns rumble-checker
+
+Verify clean removal
+./check-clean.sh
+
+Should report "All clean."
+
 Issues
 File issues on GitHub.
 
