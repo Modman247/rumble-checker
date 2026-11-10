@@ -2,7 +2,7 @@
 
 No existing Linux tool combines rumble, polling, drift, and permission management in one place. This does.
 
-> **v1** was a single-file rumble tester. **v2** is a full diagnostic suite. See [v1.0](https://github.com/Modman247/rumble-checker/tree/v1.0) for the original.
+> **v1** was a single-file rumble tester. **v2** is a full diagnostic suite. See [v1.0](https://github.com/Modman247/rumble-checker/tree/v1.0.0) for the original.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue)]()
 [![Platform](https://img.shields.io/badge/Platform-Linux-green)]()
