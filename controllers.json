@@ -218,6 +218,9 @@
       "Dedicated shield kernel module",
       "Also an Android tablet",
       "BT pairing not possible"
+    ],
+    "connections": [
+      "USB"
     ]
   },
   "046d:c21f": {
