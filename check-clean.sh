@@ -25,6 +25,7 @@ echo "=== Binary ==="
 
 echo "=== Python files ==="
 check "/usr/local/lib/$APP"
+check "/usr/lib/$APP"
 check_cmd "$APP"
 check "/usr/local/bin/$APP"
 check "/usr/bin/$APP"
