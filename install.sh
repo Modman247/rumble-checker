@@ -11,7 +11,7 @@ DESKTOP_FILE="$DESKTOP_DIR/$APP_NAME.desktop"
 
 # --- Python files ---
 sudo mkdir -p "$LIB_DIR"
-sudo cp "$SCRIPT_DIR"/{backend.py,tk_app.py,cli.py,sfx.py,controllers.json} "$LIB_DIR/"
+sudo cp "$SCRIPT_DIR"/{backend.py,tk_app.py,cli.py,sfx.py,controllers.json,rumble-checker-icon.png} "$LIB_DIR/"
 echo "  installed Python files to $LIB_DIR"
 
 # --- Launcher ---
