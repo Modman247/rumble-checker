@@ -84,10 +84,23 @@ def get_controller_mode(sysfs_path: str) -> str:
     return "unknown"
 
 
+# Load the controller DB (confirmed devices). Authoritative when present.
+try:
+    _DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "controllers.json")
+    CONTROLLERS = json.load(open(_DB_PATH))
+except Exception:
+    CONTROLLERS = {}
+
+
 def get_mode_display(vendor: str, product: str, driver: str, name: str = "") -> tuple[str, str]:
-    """Return (brand, mode). Driver determines mode. Name/VID:PID determine brand."""
+    """Return (brand, mode). Confirmed JSON entry wins; else driver/name fallback."""
     mode = DRIVER_TO_MODE.get(driver, driver if driver != "unknown" else "Unknown")
     vp = f"{vendor}:{product}"
+
+    # Confirmed device in the JSON DB -> authoritative
+    entry = CONTROLLERS.get(vp)
+    if entry and "name" in entry and "mode" in entry:
+        return entry["name"], entry["mode"]
 
     # 8BitDo detection via name (catches dongle pass-through, all Magic modes)
     name_lower = name.lower()
@@ -139,6 +152,12 @@ def parse_input_devices() -> list[Device]:
         battery = get_battery_level(uniq, sysfs)
         fw = None
         connection = _get_connection(sysfs)
+        # Dongle-only hardware masquerading as USB (e.g. F710 Nano
+        # Receiver presents the pad's own VID:PID). Trust the DB.
+        if connection == "USB":
+            _e = CONTROLLERS.get(f"{vendor}:{product}")
+            if _e and "Dongle" in _e.get("conn", "") and "USB" not in _e.get("conn", ""):
+                connection = "Dongle"
 
         devices.append(Device(
             name=name,
@@ -189,15 +208,25 @@ def _get_connection(sysfs_path: str) -> str:
             return "USB"
 
         vid_file = f"/sys/bus/usb/devices/{usb_dev}/idVendor"
+        pid_file = f"/sys/bus/usb/devices/{usb_dev}/idProduct"
         if not os.path.isfile(vid_file):
             return "USB"
         with open(vid_file) as f:
             usb_vid = f.read().strip().lower()
+        usb_pid = ""
+        if os.path.isfile(pid_file):
+            with open(pid_file) as f:
+                usb_pid = f.read().strip().lower()
 
         m = re.search(r'0003:([0-9A-Fa-f]{4}):([0-9A-Fa-f]{4})', sysfs_path)
         if m:
             hid_vid = m.group(1).lower()
-            return "USB" if usb_vid == hid_vid else "Dongle"
+            hid_pid = m.group(2).lower()
+            if usb_vid != hid_vid:
+                return "Dongle"
+            if usb_pid and usb_pid != hid_pid:
+                return "Dongle"
+            return "USB"
         else:
             # No HID VID in path — check if USB parent is a known dongle
             if usb_vid in _known_dongle_vids:
@@ -207,29 +236,47 @@ def _get_connection(sysfs_path: str) -> str:
         pass
     return "USB"
 
+def _fmt_battery(ps_dir: str):
+    """Return 'NN%' or 'NN% ⚡' (charging/full), or None if unreadable."""
+    cap_file = os.path.join(ps_dir, "capacity")
+    if not os.path.exists(cap_file):
+        return None
+    try:
+        val = open(cap_file).read().strip()
+        status_file = os.path.join(ps_dir, "status")
+        if os.path.exists(status_file):
+            st = open(status_file).read().strip()
+            if st in ("Charging", "Full"):
+                return f"{val}% \u26a1"
+        return f"{val}%"
+    except Exception:
+        return None
+
+
 def get_battery_level(uniq: str, sysfs_path: str) -> str | None:
     if uniq:
         mac_lower = uniq.lower()
+        # DS4 / DualSense (hid-playstation driver)
         ps_entry = f"/sys/class/power_supply/ps-controller-battery-{mac_lower}"
         if os.path.isdir(ps_entry):
-            cap_file = os.path.join(ps_entry, "capacity")
-            if os.path.exists(cap_file):
-                try:
-                    return f"{open(cap_file).read().strip()}%"
-                except Exception:
-                    pass
+            b = _fmt_battery(ps_entry)
+            if b:
+                return b
+        # DS3 (hid-sony driver) — different filename prefix
+        sony_entry = f"/sys/class/power_supply/sony_controller_battery_{mac_lower}"
+        if os.path.isdir(sony_entry):
+            b = _fmt_battery(sony_entry)
+            if b:
+                return b
     if sysfs_path:
         match = re.search(r'input/input(\d+)', sysfs_path)
         if match:
             ps_link = f"/sys/class/input/input{match.group(1)}/power_supply"
             if os.path.islink(ps_link):
                 ps_path = os.path.realpath(ps_link)
-                cap_file = os.path.join(ps_path, "capacity")
-                if os.path.exists(cap_file):
-                    try:
-                        return f"{open(cap_file).read().strip()}%"
-                    except Exception:
-                        pass
+                b = _fmt_battery(ps_path)
+                if b:
+                    return b
     ps_base = "/sys/class/power_supply"
     if os.path.isdir(ps_base):
         for entry in os.listdir(ps_base):

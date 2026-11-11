@@ -228,7 +228,7 @@
     "mode": "XInput (xpad)",
     "ff": true,
     "battery": "N/A",
-    "conn": "USB/BT/Dongle",
+    "conn": "Dongle",
     "quirks": [
       "XInput: Hold + button while plugging in USB",
       "DInput: Plug in without holding any button",
@@ -278,5 +278,13 @@
       "xpad inject candidate: echo 20bc 5501 | sudo tee /sys/module/xpad/parameters/new_id",
       "Should switch from DInput to XInput after inject"
     ]
+  },
+  "046d:c219": {
+    "name": "Logitech F710 (D mode)",
+    "mode": "DInput (emulates Cordless Rumblepad 2)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "Dongle",
+    "notes": "DInput mode (side switch). Shared VID with Cordless Rumblepad 2. Dongle: 046d:c534 Nano Receiver."
   }
 }
