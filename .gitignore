@@ -10,3 +10,4 @@ build.log
 *.pkg.tar.zst
 rumble-checker
 [51
+__pycache__/
