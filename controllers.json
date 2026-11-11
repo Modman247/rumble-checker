@@ -53,7 +53,7 @@
     "battery": "N/A",
     "conn": "USB/Dongle/BT",
     "quirks": [
-      "SHARED by 7 controllers: Xbox 360 Wired, 8BitDo M30/SN30/PCE30 (X), N-SL SW001, Honwally NES",
+      "SHARED by 8 controllers: Xbox 360 Wired, 8BitDo M30/SN30/PCE30 (X), N-SL SW001, Honwally NES, EXLENE GameCube",
       "Distinguish by physical unit, name in D mode, or connection method",
       "Xbox 360 Wired: auto-claims via xpad, cannot test inject"
     ]
@@ -102,13 +102,15 @@
     ]
   },
   "057e:2009": {
-    "name": "8BitDo SN30 (Switch mode)",
+    "name": "MAYFLASH Magic-S Ultimate (Switch mode)",
     "mode": "Switch Pro (hid-nintendo)",
     "ff": true,
     "battery": "N/A",
     "conn": "Dongle",
     "quirks": [
-      "Spoofs as Switch Pro Controller"
+      "Spoofs as Switch Pro Controller",
+      "Shared VID: real Switch Pro + 8BitDo SN30 (Switch mode) also use 057e:2009",
+      "Dongle: 33df"
     ]
   },
   "0f0d:0138": {
@@ -286,5 +288,13 @@
     "battery": "N/A",
     "conn": "Dongle",
     "notes": "DInput mode (side switch). Shared VID with Cordless Rumblepad 2. Dongle: 046d:c534 Nano Receiver."
+  },
+  "057e:0330": {
+    "name": "Wii U Pro",
+    "mode": "Wii U Pro (Native)",
+    "ff": true,
+    "battery": "N/A",
+    "conn": "BT",
+    "notes": "WUP-005. BT VID is 057e:0330. USB port (0b6a:a132) is CHARGE-ONLY (reports as 'USB Charger'). Battery exposed via wiimote_battery_{mac}. No status/voltage file \u2014 no charging indicator."
   }
 }

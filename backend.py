@@ -268,6 +268,22 @@ def get_battery_level(uniq: str, sysfs_path: str) -> str | None:
             b = _fmt_battery(sony_entry)
             if b:
                 return b
+        # Wii U Pro (hid-wiimote driver)
+        wiimote_entry = f"/sys/class/power_supply/wiimote_battery_{mac_lower}"
+        if os.path.isdir(wiimote_entry):
+            b = _fmt_battery(wiimote_entry)
+            if b:
+                return b
+    # Fallback: no MAC exposed (e.g. Wii U Pro over BT has empty Uniq)
+    # Scoped to the Wii U Pro by sysfs path so it doesn't leak to other devices.
+    if sysfs_path and "057e:0330" in sysfs_path.lower():
+        _ps_base = "/sys/class/power_supply"
+        if os.path.isdir(_ps_base):
+            for _e in os.listdir(_ps_base):
+                if _e.startswith("wiimote_battery_"):
+                    b = _fmt_battery(os.path.join(_ps_base, _e))
+                    if b:
+                        return b
     if sysfs_path:
         match = re.search(r'input/input(\d+)', sysfs_path)
         if match:
